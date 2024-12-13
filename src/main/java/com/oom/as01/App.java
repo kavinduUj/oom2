@@ -9,7 +9,9 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.*;
 
@@ -23,6 +25,7 @@ public class App {
 	List<JPanel> userPanels;
 	
 	SocialApp socialApp;
+	Map<String, JPanel> userIDPanelMap;
 
 	public App() {
 		mainUi();
@@ -34,6 +37,9 @@ public class App {
 		
 		// Setup the main social app class
 		socialApp = new SocialApp();
+		
+		// Setup map to keep track of user and their associated panel
+        userIDPanelMap = new HashMap<>();
 
         // creating main frame which is include all the UI
         mainFrame = new JFrame("Social Media Application");
@@ -189,9 +195,8 @@ public class App {
     }
 
 	private void addNewUser() {
-		CreateUser newUser = new CreateUser();
+		CreateUser newUser = new CreateUser(Integer.toString(this.socialApp.getAndIncrementUserCounter()));
 		socialApp.addObserver(newUser);
-        List<String> messages = newUser.getAllMessages();
         addSubPanel();
     }
 
